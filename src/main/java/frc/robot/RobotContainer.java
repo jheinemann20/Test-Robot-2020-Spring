@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
 import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
 import frc.robot.subsystems.DriveTrainSub;
@@ -24,6 +26,7 @@ import frc.robot.subsystems.DriveTrainSub;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSub driveSub = new DriveTrainSub();
 
@@ -36,11 +39,14 @@ public class RobotContainer {
   private static XboxController myJoy = new XboxController(0);
   private static XboxController myJoy2 = new XboxController(1);
 
+  // Buttons
+  private JoystickButton shiftButton = new JoystickButton(myJoy, Constants.SHIFT_BUTTON);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
+    driveSub.setDefaultCommand(mecanumDrive);
     configureButtonBindings();
   }
 
@@ -51,22 +57,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-  }
-
-  /**
-   * @param The axis # of the first controller/joystick
-   * @return The axis value
-   */
-  public static double getAxis(int axis) {
-    return myJoy.getRawAxis(axis);
-  }
-
-  /**
-   * @param The axis # of the second controller/joystick
-   * @return The axis value
-   */
-  public static double getAxis2(int axis) {
-    return myJoy2.getRawAxis(axis);
+    shiftButton.toggleWhenPressed(arcadeDrive);
   }
 
   /**

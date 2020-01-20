@@ -35,7 +35,7 @@ public class MecanumDriveCom extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    driveSub.mecanumDrive(controller.getX(Hand.kLeft), controller.getY(Hand.kLeft), controller.getX(Hand.kRight));
+    driveSub.mecanumDrive(controller.getX(Hand.kLeft) * 2, -controller.getY(Hand.kLeft) * 2, controller.getX(Hand.kRight) * 2);
   }
 
   // Make this return true when this Command no longer needs to run execute()

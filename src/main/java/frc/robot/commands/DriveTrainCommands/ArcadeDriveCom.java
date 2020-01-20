@@ -35,7 +35,7 @@ public class ArcadeDriveCom extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    driveSub.arcadeDrive(controller.getY(Hand.kLeft), controller.getX(Hand.kRight));
+    driveSub.arcadeDrive(-controller.getY(Hand.kLeft) * 2, controller.getX(Hand.kRight) * 2);
   }
 
   // Make this return true when this Command no longer needs to run execute()

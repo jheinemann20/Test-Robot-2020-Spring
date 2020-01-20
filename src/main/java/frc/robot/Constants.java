@@ -19,10 +19,10 @@ package frc.robot;
  */
 public final class Constants {
     // DriveTrain Motor IDs
-    public static final int FRONT_LEFT_MOTOR = 0;
-    public static final int FRONT_RIGHT_MOTOR = 0;
-    public static final int REAR_LEFT_MOTOR = 0;
-    public static final int REAR_RIGHT_MOTOR = 0;
+    public static final int FRONT_LEFT_MOTOR = 5;
+    public static final int FRONT_RIGHT_MOTOR = 4;
+    public static final int REAR_LEFT_MOTOR = 3;
+    public static final int REAR_RIGHT_MOTOR = 2;
 
     // Solenoid IDs
     public static final int SHIFT_FORWARD_SOL = 0;
@@ -30,6 +30,8 @@ public final class Constants {
 
     // DriveStick Controls
     public static final double DRIVESTICK_DEADBAND = 0.05;
+
+    public static final int SHIFT_BUTTON = 1;
 
     // SecondaryStick Controls
 }
