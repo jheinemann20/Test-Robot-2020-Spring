@@ -53,10 +53,10 @@ public class DriveTrainSub extends SubsystemBase {
     rightSide = new SpeedControllerGroup(frontRight, rearRight);
     arcDrive = new DifferentialDrive(leftSide, rightSide);
 
-    frontLeft.setOpenLoopRampRate(0);
-    frontRight.setOpenLoopRampRate(0);
-    rearLeft.setOpenLoopRampRate(0);
-    rearRight.setOpenLoopRampRate(0);
+    frontLeft.setOpenLoopRampRate(1);
+    frontRight.setOpenLoopRampRate(1);
+    rearLeft.setOpenLoopRampRate(1);
+    rearRight.setOpenLoopRampRate(1);
 
     frontLeft.setIdleMode(IdleMode.kCoast);
     frontRight.setIdleMode(IdleMode.kCoast);

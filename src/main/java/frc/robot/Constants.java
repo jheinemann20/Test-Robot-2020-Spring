@@ -24,6 +24,9 @@ public final class Constants {
     public static final int REAR_LEFT_MOTOR = 3;
     public static final int REAR_RIGHT_MOTOR = 2;
 
+    // Shooter Motor IDs
+    public static final int SHOOTER_MOTOR = 0;
+
     // Solenoid IDs
     public static final int SHIFT_FORWARD_SOL = 0;
     public static final int SHIFT_REVERSE_SOL = 1;
