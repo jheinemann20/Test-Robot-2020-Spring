@@ -80,16 +80,18 @@ public class DriveTrainSub extends SubsystemBase {
   }
 
   public double getCurrent(String name) {
-    if (name.equals("FR"))
+    switch (name) {
+    case "FR":
       return frontRight.getOutputCurrent();
-    else if (name.equals("FL"))
+    case "FL":
       return frontLeft.getOutputCurrent();
-    else if (name.equals("RR"))
+    case "RR":
       return rearRight.getOutputCurrent();
-    else if (name.equals("RL"))
+    case "RL":
       return rearLeft.getOutputCurrent();
-    else
+    default:
       return 0;
+    }
   }
 
   /**
