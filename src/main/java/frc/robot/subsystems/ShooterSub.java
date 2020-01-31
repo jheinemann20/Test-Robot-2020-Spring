@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +20,9 @@ public class ShooterSub extends SubsystemBase {
 
   private CANSparkMax shooterMotor;
   private CANEncoder shooterEncoder;
+  private CANPIDController shooterPID;
+
+  private double kP, kI, kD, kIz, kFF, rpm;
 
   /**
    * Creates a new ShooterSub.
@@ -25,17 +30,30 @@ public class ShooterSub extends SubsystemBase {
   public ShooterSub() {
     shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
     shooterEncoder = new CANEncoder(shooterMotor);
+    shooterPID = shooterMotor.getPIDController();
+
+    kP = 5e-5; 
+    kI = 1e-6;
+    kD = 0; 
+    kIz = 0; 
+    kFF = 0;
+    rpm = 1000; // 5700 max
+
+    shooterPID.setP(kP);
+    shooterPID.setI(kI);
+    shooterPID.setD(kD);
+    shooterPID.setIZone(kIz);
+    shooterPID.setFF(kFF);
+    shooterPID.setOutputRange(1, 1);
 
     shooterMotor.setOpenLoopRampRate(0.5);
-    // shooterMotor.setSmartCurrentLimit(stallLimit, freeLimit, limitRPM); TODO: figure this out
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void startShoot() {
+    shooterPID.setReference(rpm, ControlType.kVelocity);
   }
 
-  public void fire() {
-    shooterMotor.set(1);
+  public void stopShoot() {
+    shooterMotor.set(0);
   }
 }
