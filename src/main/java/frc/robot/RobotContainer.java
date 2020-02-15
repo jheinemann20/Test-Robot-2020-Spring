@@ -12,11 +12,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
 import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
+import frc.robot.commands.LifterCommands.LiftDownCom;
+import frc.robot.commands.LifterCommands.LiftUpCom;
+import frc.robot.commands.ShooterCommands.ShootCom;
 import frc.robot.subsystems.DriveTrainSub;
+import frc.robot.subsystems.LifterSub;
+import frc.robot.subsystems.ShooterSub;
+import frc.robot.triggers.AxisButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -29,11 +36,18 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSub driveSub = new DriveTrainSub();
+  private final LifterSub lifterSub = new LifterSub();
+  private final ShooterSub shooterSub = new ShooterSub();
 
   @JsonIgnore
   private final ArcadeDriveCom arcadeDrive = new ArcadeDriveCom(driveSub);
   @JsonIgnore
   private final MecanumDriveCom mecanumDrive = new MecanumDriveCom(driveSub);
+
+  private final ShootCom shootCom = new ShootCom(shooterSub);
+
+  private final LiftUpCom liftUpCom = new LiftUpCom(lifterSub);
+  private final LiftDownCom liftDownCom = new LiftDownCom(lifterSub);
 
   // Joysticks/Controllers
   private static XboxController myJoy = new XboxController(0);
@@ -42,11 +56,18 @@ public class RobotContainer {
   // Buttons
   private JoystickButton shiftButton = new JoystickButton(myJoy, Constants.SHIFT_BUTTON);
 
+  private JoystickButton shootButton = new JoystickButton(myJoy2, Constants.SHOOTER_SHOOT_BUTTON);
+  private AxisButton liftUpButton  = new AxisButton(myJoy2, Constants.LIFT_UP_AXIS);
+  private AxisButton liftDownButton = new AxisButton(myJoy2, Constants.LIFT_DOWN_AXIS);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveSub.setDefaultCommand(mecanumDrive);
+    shootButton.whenPressed(shootCom);
+    liftUpButton.whenActive(liftUpCom);
+    liftDownButton.whenActive(liftDownCom);
     configureButtonBindings();
   }
 

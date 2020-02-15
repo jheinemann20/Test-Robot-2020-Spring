@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -19,6 +20,7 @@ import frc.robot.Constants;
 public class ShooterSub extends SubsystemBase {
 
   private CANSparkMax shooterMotor;
+  @JsonIgnore // encoder needed
   private CANEncoder shooterEncoder;
   private CANPIDController shooterPID;
 
@@ -37,19 +39,20 @@ public class ShooterSub extends SubsystemBase {
     kD = 0; 
     kIz = 0; 
     kFF = 0;
-    rpm = 1000; // 5700 max
+    rpm = 2000; // 5700 max
 
     shooterPID.setP(kP);
     shooterPID.setI(kI);
     shooterPID.setD(kD);
     shooterPID.setIZone(kIz);
     shooterPID.setFF(kFF);
-    shooterPID.setOutputRange(1, 1);
+    shooterPID.setOutputRange(-1, 1);
 
-    shooterMotor.setOpenLoopRampRate(0.5);
+    shooterMotor.setClosedLoopRampRate(0.5);
   }
 
   public void startShoot() {
+    // shooterMotor.set(1);
     shooterPID.setReference(rpm, ControlType.kVelocity);
   }
 

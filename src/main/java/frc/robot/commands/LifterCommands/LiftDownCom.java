@@ -5,20 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.ShooterCommands;
+package frc.robot.commands.LifterCommands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSub;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.LifterSub;
 
-public class ShootCom extends CommandBase {
+public class LiftDownCom extends CommandBase {
+  LifterSub lifterSub;
+  XboxController lifController;
+
   /**
-   * Creates a new ShootCom.
+   * Creates a new LiftDownCom.
    */
-  private ShooterSub shootSub;
-
-  public ShootCom(ShooterSub shootSub) {
-    this.shootSub = shootSub;
-    addRequirements(shootSub);
+  public LiftDownCom(LifterSub lifterSub) {
+    lifController = RobotContainer.getController(2);
+    this.lifterSub = lifterSub;
+    addRequirements(lifterSub);
   }
 
   // Called when the command is initially scheduled.
@@ -29,13 +34,13 @@ public class ShootCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shootSub.startShoot();
+    lifterSub.lift(lifController.getTriggerAxis(Hand.kRight));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shootSub.stopShoot();
+    lifterSub.stopLift();
   }
 
   // Returns true when the command should end.

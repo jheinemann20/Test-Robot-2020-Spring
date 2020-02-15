@@ -27,6 +27,13 @@ public final class Constants {
     // Shooter Motor IDs
     public static final int SHOOTER_MOTOR = 0;
 
+    // Lifter Motor IDs
+    public static final int FRONT_LIFTER_MOTOR = 11;
+    public static final int REAR_LIFTER_MOTOR = 9;
+
+    public static final int[] FRONT_LIFTER_ENCODER = {0, 1};
+    public static final int[] REAR_LIFTER_ENCODER = {2, 3};
+
     // Solenoid IDs
     public static final int SHIFT_FORWARD_SOL = 0;
     public static final int SHIFT_REVERSE_SOL = 1;
@@ -37,4 +44,8 @@ public final class Constants {
     public static final int SHIFT_BUTTON = 1;
 
     // SecondaryStick Controls
+    public static final int LIFT_UP_AXIS = 2;
+    public static final int LIFT_DOWN_AXIS = 3;
+    public static final int SHOOTER_SHOOT_BUTTON = 6;
+    public static final int SHOOTER_LOAD_BUTTON = 5;
 }
