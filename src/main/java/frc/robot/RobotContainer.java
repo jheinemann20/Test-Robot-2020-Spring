@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
 import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
 import frc.robot.commands.LifterCommands.LiftDownCom;
+import frc.robot.commands.LifterCommands.LiftStop;
 import frc.robot.commands.LifterCommands.LiftUpCom;
 import frc.robot.commands.ShooterCommands.ShootCom;
 import frc.robot.subsystems.DriveTrainSub;
@@ -48,6 +49,7 @@ public class RobotContainer {
 
   private final LiftUpCom liftUpCom = new LiftUpCom(lifterSub);
   private final LiftDownCom liftDownCom = new LiftDownCom(lifterSub);
+  private final LiftStop liftStopCom = new LiftStop(lifterSub);
 
   // Joysticks/Controllers
   private static XboxController myJoy = new XboxController(0);
@@ -56,15 +58,16 @@ public class RobotContainer {
   // Buttons
   private JoystickButton shiftButton = new JoystickButton(myJoy, Constants.SHIFT_BUTTON);
 
-  private JoystickButton shootButton = new JoystickButton(myJoy2, Constants.SHOOTER_SHOOT_BUTTON);
-  private AxisButton liftUpButton  = new AxisButton(myJoy2, Constants.LIFT_UP_AXIS);
-  private AxisButton liftDownButton = new AxisButton(myJoy2, Constants.LIFT_DOWN_AXIS);
+  private JoystickButton shootButton = new JoystickButton(myJoy, Constants.SHOOTER_SHOOT_BUTTON);
+  private AxisButton liftUpButton  = new AxisButton(myJoy, Constants.LIFT_UP_AXIS, 0.01);
+  private AxisButton liftDownButton = new AxisButton(myJoy, Constants.LIFT_DOWN_AXIS, 0.01);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveSub.setDefaultCommand(mecanumDrive);
+    lifterSub.setDefaultCommand(liftStopCom);
     shootButton.whenPressed(shootCom);
     liftUpButton.whenActive(liftUpCom);
     liftDownButton.whenActive(liftDownCom);

@@ -70,13 +70,13 @@ public class DriveTrainSub extends SubsystemBase {
 
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
     driveSol.set(DoubleSolenoid.Value.kForward);
-    mecDrive.driveCartesian(-ySpeed, xSpeed, -zRotation);
+    mecDrive.driveCartesian(-ySpeed * 0.5, xSpeed * 0.5, -zRotation * 0.5);
 
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
     driveSol.set(DoubleSolenoid.Value.kReverse);
-    arcDrive.arcadeDrive(xSpeed, zRotation);
+    arcDrive.arcadeDrive(xSpeed * 0.5, zRotation * 0.5);
   }
 
   public double getCurrent(String name) {

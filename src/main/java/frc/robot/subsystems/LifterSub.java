@@ -35,13 +35,17 @@ public class LifterSub extends SubsystemBase {
     frontEncoder = new Encoder(Constants.FRONT_LIFTER_ENCODER[0], Constants.FRONT_LIFTER_ENCODER[1]);
     rearEncoder = new Encoder(Constants.REAR_LIFTER_ENCODER[0], Constants.REAR_LIFTER_ENCODER[1]);
 
-    frontPID = new PIDController(5e-5, 1e-6, 0);
-    rearPID = new PIDController(5e-5, 1e-6, 0);
+    frontPID = new PIDController(0.001, 0, 0);
+    rearPID = new PIDController(0.001, 0, 0);
+
+    frontPID.setIntegratorRange(0.5, 0.5);
+    rearPID.setIntegratorRange(0.5, 0.5);
   }
 
   public void lift(double speed) {
-    frontLifter.set(speed);
-    rearLifter.set(frontPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    // frontLifter.set(speed);
+    // rearLifter.set(rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    System.out.println(frontEncoder.getDistance() + "   " + rearEncoder.getDistance() + "     " + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
   }
 
   public void stopLift() {
