@@ -43,9 +43,9 @@ public class LifterSub extends SubsystemBase {
   }
 
   public void lift(double speed) {
-    // frontLifter.set(speed);
-    // rearLifter.set(rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
-    System.out.println(frontEncoder.getDistance() + "   " + rearEncoder.getDistance() + "     " + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    frontLifter.set(speed);
+    rearLifter.set(rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    // System.out.println(frontEncoder.getDistance() + "   " + rearEncoder.getDistance() + "     " + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
   }
 
   public void stopLift() {
