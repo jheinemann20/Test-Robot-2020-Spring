@@ -7,31 +7,31 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class HerderSub extends SubsystemBase {
+public class HerderArmSub extends SubsystemBase {
 
-  private WPI_VictorSPX herderMotor;
-  
+  private WPI_VictorSPX herderArmMotor;
 
   /**
-   * Creates a new HerderSub.
+   * Creates a new HerderArmSub.
    */
-  public HerderSub() {
-    herderMotor = new WPI_VictorSPX(Constants.HERDER_MOTOR);
-    herderMotor.configClosedloopRamp(2);
+  public HerderArmSub() {
+    herderArmMotor = new WPI_VictorSPX(Constants.HERDER_ARM_MOTOR);
   }
 
-  public void herd() {
-    herderMotor.set(-0.6);
+  public void lowerArm() {
+    herderArmMotor.set(0.75);
   }
 
-  public void stopHerd() {
-    herderMotor.set(0);
+  public void raiseArm() {
+    herderArmMotor.set(-1);
   }
 
+  public void stopArm() {
+    herderArmMotor.set(0);
+  }
 }

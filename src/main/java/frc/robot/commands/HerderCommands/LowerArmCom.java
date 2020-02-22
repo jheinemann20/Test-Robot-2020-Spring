@@ -8,18 +8,18 @@
 package frc.robot.commands.HerderCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.HerderSub;
+import frc.robot.subsystems.HerderArmSub;
 
 public class LowerArmCom extends CommandBase {
 
-  private HerderSub herderSub;
+  private HerderArmSub herderArmSub;
 
   /**
    * Creates a new LowerArmCom.
    */
-  public LowerArmCom(HerderSub herderSub) {
-    addRequirements(herderSub);
-    this.herderSub = herderSub;
+  public LowerArmCom(HerderArmSub herderArmSub) {
+    addRequirements(herderArmSub);
+    this.herderArmSub = herderArmSub;
   }
 
   // Called when the command is initially scheduled.
@@ -30,12 +30,13 @@ public class LowerArmCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    herderSub.lowerArm();
+    herderArmSub.lowerArm();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    herderArmSub.stopArm();
   }
 
   // Returns true when the command should end.

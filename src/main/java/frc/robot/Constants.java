@@ -29,14 +29,14 @@ public final class Constants {
 
     // Lifter Motor IDs
     public static final int FRONT_LIFTER_MOTOR = 11;
-    public static final int REAR_LIFTER_MOTOR = 9;
+    public static final int REAR_LIFTER_MOTOR = 6;
 
     public static final int[] FRONT_LIFTER_ENCODER = {0, 1};
     public static final int[] REAR_LIFTER_ENCODER = {2, 3};
 
     // Herder Motor IDs
-    public static final int HERDER_MOTOR = 0;
-    public static final int HERDER_ARM_MOTOR = 0;
+    public static final int HERDER_MOTOR = 7;
+    public static final int HERDER_ARM_MOTOR = 12;
 
     // Solenoid IDs
     public static final int SHIFT_FORWARD_SOL = 0;
@@ -50,9 +50,9 @@ public final class Constants {
     // SecondaryStick Controls
     public static final int LIFT_UP_AXIS = 2;
     public static final int LIFT_DOWN_AXIS = 3;
-    public static final int SHOOTER_SHOOT_BUTTON = 6;
-    public static final int SHOOTER_LOAD_BUTTON = 5;
-    public static final int HERD_BUTTON = 0;
-    public static final int RAISE_ARM_BUTTON = 0;
-    public static final int LOWER_ARM_BUTTON = 0;
+    public static final int SHOOTER_SHOOT_BUTTON = 0;
+    public static final int SHOOTER_LOAD_BUTTON = 0;
+    public static final int HERD_BUTTON = 2;
+    public static final int RAISE_ARM_BUTTON = 6;
+    public static final int LOWER_ARM_BUTTON = 5;
 }

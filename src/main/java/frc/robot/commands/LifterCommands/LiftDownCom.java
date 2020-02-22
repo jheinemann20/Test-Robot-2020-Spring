@@ -10,6 +10,7 @@ package frc.robot.commands.LifterCommands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LifterSub;
 
@@ -21,7 +22,7 @@ public class LiftDownCom extends CommandBase {
    * Creates a new LiftDownCom.
    */
   public LiftDownCom(LifterSub lifterSub) {
-    lifController = RobotContainer.getController(2);
+    lifController = RobotContainer.getController(1);
     this.lifterSub = lifterSub;
     addRequirements(lifterSub);
   }
@@ -34,7 +35,7 @@ public class LiftDownCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lifterSub.lift(lifController.getTriggerAxis(Hand.kRight));
+    lifterSub.lift(-lifController.getRawAxis(Constants.LIFT_DOWN_AXIS));
   }
 
   // Called once the command ends or is interrupted.
