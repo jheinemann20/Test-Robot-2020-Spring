@@ -25,6 +25,8 @@ public class LifterSub extends SubsystemBase {
   private PIDController frontPID;
   private PIDController rearPID;
 
+  private double maxLift;
+
   /**
    * Creates a new LifterSub.
    */
@@ -35,22 +37,35 @@ public class LifterSub extends SubsystemBase {
     frontEncoder = new Encoder(Constants.FRONT_LIFTER_ENCODER[0], Constants.FRONT_LIFTER_ENCODER[1]);
     rearEncoder = new Encoder(Constants.REAR_LIFTER_ENCODER[0], Constants.REAR_LIFTER_ENCODER[1]);
 
-    frontPID = new PIDController(0.001, 0, 0);
-    rearPID = new PIDController(0.001, 0, 0);
+    frontPID = new PIDController(0.002, 0, 0);
+    rearPID = new PIDController(0.002, 0, 0);
 
     frontPID.setIntegratorRange(-0.5, 0.5);
     rearPID.setIntegratorRange(-0.5, 0.5);
+
+    maxLift = 10000;
   }
 
   public void lift(double speed) {
-    System.out.println(speed);
-    frontLifter.set(speed);
-    rearLifter.set(-speed + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    if (frontEncoder.getDistance() < maxLift) {
+      frontLifter.set(speed);
+      rearLifter.set(-speed + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    } else if (speed > 0) {
+      frontLifter.set(speed);
+      rearLifter.set(-speed + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    } else {
+      rearLifter.set(rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    }
     // System.out.println(frontEncoder.getDistance() + "   " + rearEncoder.getDistance() + "     " + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
   }
 
   public void stopLift() {
     frontLifter.set(0);
     rearLifter.set(0);
+  }
+
+  public void resetLimit() {
+    frontEncoder.reset();
+    rearEncoder.reset();
   }
 }

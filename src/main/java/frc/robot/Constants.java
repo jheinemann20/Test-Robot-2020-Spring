@@ -47,6 +47,8 @@ public final class Constants {
 
     public static final int SHIFT_BUTTON = 1;
 
+    public static final int VISION_AIM_BUTTON = 4;
+
     // SecondaryStick Controls
     public static final int LIFT_UP_AXIS = 2;
     public static final int LIFT_DOWN_AXIS = 3;
@@ -55,4 +57,5 @@ public final class Constants {
     public static final int HERD_BUTTON = 2;
     public static final int RAISE_ARM_BUTTON = 6;
     public static final int LOWER_ARM_BUTTON = 5;
+    public static final int RESET_LIFTER_ENCODER_BUTTON = 8;
 }

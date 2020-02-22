@@ -27,7 +27,7 @@ public class HerderSub extends SubsystemBase {
   }
 
   public void herd() {
-    herderMotor.set(-0.6);
+    herderMotor.set(-0.65);
   }
 
   public void stopHerd() {
