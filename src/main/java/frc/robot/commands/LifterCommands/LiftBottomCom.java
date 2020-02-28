@@ -5,25 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.DriveTrainCommands;
+package frc.robot.commands.LifterCommands;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrainSub;
+import frc.robot.subsystems.LifterSub;
 
-public class LimelightAimCom extends CommandBase {
+public class LiftBottomCom extends CommandBase {
 
-  private DriveTrainSub driveSub;
-
-  private double tv;
-  private double tx;
+  LifterSub liftersub;
+  PIDController liftPid;
 
   /**
-   * Creates a new LimelightAimCom.
+   * Creates a new LiftBottomCom.
    */
-  public LimelightAimCom(DriveTrainSub driveSub) {
-    addRequirements(driveSub);
-    this.driveSub = driveSub;
+  public LiftBottomCom(LifterSub lifterSub) {
+    this.liftersub = lifterSub;
+    addRequirements(lifterSub);
+
+    liftPid = new PIDController(0.001, 0, 0);
+    liftPid.setIntegratorRange(-0.5, 0.5);
   }
 
   // Called when the command is initially scheduled.
@@ -34,17 +35,7 @@ public class LimelightAimCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    if (tv == 0)
-      return;
-    tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-    if (tx > 0 ) {
-      System.out.println("TURN RIGHT");
-      driveSub.arcadeDrive(0, 0.25);
-    } else if (tx < 0) {
-      System.out.println("TURN LEFT");
-      driveSub.arcadeDrive(0, -0.25);
-    }
+    liftersub.lift(liftPid.calculate(liftersub.getEncoder(1), 0));
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +46,6 @@ public class LimelightAimCom extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return liftPid.atSetpoint();
   }
 }

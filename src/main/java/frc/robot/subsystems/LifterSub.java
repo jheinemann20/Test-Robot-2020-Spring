@@ -68,4 +68,14 @@ public class LifterSub extends SubsystemBase {
     frontEncoder.reset();
     rearEncoder.reset();
   }
+
+  public double getEncoder(int encoder) {
+    switch (encoder) {
+      case 1:
+        return frontEncoder.getDistance();
+      case 2:
+        return rearEncoder.getDistance();
+    }
+    return 0;
+  }
 }

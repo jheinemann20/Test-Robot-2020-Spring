@@ -10,6 +10,7 @@ package frc.robot;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -22,9 +23,11 @@ import frc.robot.commands.HerderCommands.LowerArmCom;
 import frc.robot.commands.HerderCommands.RaiseArmCom;
 import frc.robot.commands.HerderCommands.StopArmCom;
 import frc.robot.commands.HerderCommands.StopHerdCom;
+import frc.robot.commands.LifterCommands.LiftBottomCom;
 import frc.robot.commands.LifterCommands.LiftDownCom;
 import frc.robot.commands.LifterCommands.LiftEncoderResetCom;
 import frc.robot.commands.LifterCommands.LiftStop;
+import frc.robot.commands.LifterCommands.LiftTopCom;
 import frc.robot.commands.LifterCommands.LiftUpCom;
 import frc.robot.commands.ShooterCommands.ShootCom;
 import frc.robot.subsystems.DriveTrainSub;
@@ -33,6 +36,7 @@ import frc.robot.subsystems.HerderSub;
 import frc.robot.subsystems.LifterSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.triggers.AxisButton;
+import frc.robot.triggers.POVButton;
 
 
 /**
@@ -64,6 +68,8 @@ public class RobotContainer {
   private final LiftDownCom liftDownCom = new LiftDownCom(lifterSub);
   private final LiftStop liftStopCom = new LiftStop(lifterSub);
   private final LiftEncoderResetCom liftResetCom = new LiftEncoderResetCom(lifterSub);
+  private final LiftTopCom liftTopCom = new LiftTopCom(lifterSub);
+  private final LiftBottomCom liftBottomCom = new LiftBottomCom(lifterSub);
 
   private final HerdCom herdCom = new HerdCom(herderSub);
   private final LowerArmCom lowerArmCom = new LowerArmCom(herderArmSub);
@@ -79,13 +85,15 @@ public class RobotContainer {
   private JoystickButton shiftButton = new JoystickButton(myJoy, Constants.SHIFT_BUTTON);
   private JoystickButton aimButton = new JoystickButton(myJoy, Constants.VISION_AIM_BUTTON);
 
-  private JoystickButton shootButton = new JoystickButton(myJoy, Constants.SHOOTER_SHOOT_BUTTON);
-  private AxisButton liftUpButton  = new AxisButton(myJoy, Constants.LIFT_UP_AXIS, 0.01);
-  private AxisButton liftDownButton = new AxisButton(myJoy, Constants.LIFT_DOWN_AXIS, 0.01);
-  private JoystickButton herdButton = new JoystickButton(myJoy, Constants.HERD_BUTTON);
-  private JoystickButton herdArmUpButton = new JoystickButton(myJoy, Constants.RAISE_ARM_BUTTON);
-  private JoystickButton herdArmDownButton = new JoystickButton(myJoy, Constants.LOWER_ARM_BUTTON);
-  private JoystickButton resetEncoderButton = new JoystickButton(myJoy, Constants.RESET_LIFTER_ENCODER_BUTTON);
+  private JoystickButton shootButton = new JoystickButton(myJoy2, Constants.SHOOTER_SHOOT_BUTTON);
+  private AxisButton liftUpButton  = new AxisButton(myJoy2, Constants.LIFT_UP_AXIS, 0.01);
+  private AxisButton liftDownButton = new AxisButton(myJoy2, Constants.LIFT_DOWN_AXIS, 0.01);
+  private JoystickButton herdButton = new JoystickButton(myJoy2, Constants.HERD_BUTTON);
+  private JoystickButton herdArmUpButton = new JoystickButton(myJoy2, Constants.RAISE_ARM_BUTTON);
+  private JoystickButton herdArmDownButton = new JoystickButton(myJoy2, Constants.LOWER_ARM_BUTTON);
+  private JoystickButton resetEncoderButton = new JoystickButton(myJoy2, Constants.RESET_LIFTER_ENCODER_BUTTON);
+  private POVButton liftTopButton = new POVButton(myJoy2, Constants.LIFT_TOP_POV);
+  private POVButton liftBottomButton = new POVButton(myJoy2, Constants.LIFT_BOTTOM_POV);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -99,6 +107,8 @@ public class RobotContainer {
     herdArmUpButton.whileHeld(raiseArmCom);
     herdArmDownButton.whileHeld(lowerArmCom);
     aimButton.whileHeld(aimCom);
+    liftTopButton.whileActiveContinuous(liftTopCom);
+    liftBottomButton.whileActiveContinuous(liftBottomCom);
     // shootButton.whileHeld(shootCom);
     liftUpButton.whileActiveContinuous(liftUpCom);
     liftDownButton.whileActiveContinuous(liftDownCom);
