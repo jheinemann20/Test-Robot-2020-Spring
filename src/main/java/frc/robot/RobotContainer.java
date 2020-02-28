@@ -113,6 +113,7 @@ public class RobotContainer {
     liftUpButton.whileActiveContinuous(liftUpCom);
     liftDownButton.whileActiveContinuous(liftDownCom);
     resetEncoderButton.whileHeld(liftResetCom);
+    shootButton.whileHeld(shootCom);
     configureButtonBindings();
   }
 

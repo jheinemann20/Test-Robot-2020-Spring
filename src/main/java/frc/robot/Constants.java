@@ -52,7 +52,7 @@ public final class Constants {
     // SecondaryStick Controls
     public static final int LIFT_UP_AXIS = 3;
     public static final int LIFT_DOWN_AXIS = 2;
-    public static final int SHOOTER_SHOOT_BUTTON = 0;
+    public static final int SHOOTER_SHOOT_BUTTON = 3;
     public static final int SHOOTER_LOAD_BUTTON = 0;
     public static final int HERD_BUTTON = 2;
     public static final int RAISE_ARM_BUTTON = 6;

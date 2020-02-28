@@ -96,7 +96,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    System.out.println(RobotContainer.getController(1).getPOVCount() + "     " + RobotContainer.getController(1).getPOV());
   }
 
   @Override
