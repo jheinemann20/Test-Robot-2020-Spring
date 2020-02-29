@@ -57,7 +57,8 @@ public class ShooterSub extends SubsystemBase {
   }
 
   public void startShoot() {
-    shooterMotor.set(1);
+    System.out.println("Setting");
+    shooterMotor.set(-1);
     // shooterPID.setReference(rpm, ControlType.kVelocity);
   }
 

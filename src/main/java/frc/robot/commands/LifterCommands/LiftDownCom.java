@@ -22,7 +22,7 @@ public class LiftDownCom extends CommandBase {
    * Creates a new LiftDownCom.
    */
   public LiftDownCom(LifterSub lifterSub) {
-    lifController = RobotContainer.getController(1);
+    lifController = RobotContainer.getController(2);
     this.lifterSub = lifterSub;
     addRequirements(lifterSub);
   }
@@ -35,7 +35,7 @@ public class LiftDownCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lifterSub.lift(-lifController.getRawAxis(Constants.LIFT_DOWN_AXIS));
+    lifterSub.lift(lifController.getRawAxis(Constants.LIFT_DOWN_AXIS));
   }
 
   // Called once the command ends or is interrupted.

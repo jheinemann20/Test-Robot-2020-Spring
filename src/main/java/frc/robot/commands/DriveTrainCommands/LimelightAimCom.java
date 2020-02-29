@@ -18,6 +18,10 @@ public class LimelightAimCom extends CommandBase {
   private double tv;
   private double tx;
 
+  private double targetHeight = 208.5;
+  private double cameraHeight = 27;
+  private double targetAngle = 0;
+
   /**
    * Creates a new LimelightAimCom.
    */
@@ -34,17 +38,17 @@ public class LimelightAimCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    targetAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     if (tv == 0)
       return;
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     if (tx > 0 ) {
-      System.out.println("TURN RIGHT");
-      driveSub.arcadeDrive(0, 0.25);
+      driveSub.arcadeDrive(0, 0.3 + tx / 20);
     } else if (tx < 0) {
-      System.out.println("TURN LEFT");
-      driveSub.arcadeDrive(0, -0.25);
+      driveSub.arcadeDrive(0, -0.3 + tx / 20);
     }
+    System.out.println("Distance: " + ((targetHeight - cameraHeight) / Math.tan(targetAngle)));
   }
 
   // Called once the command ends or is interrupted.

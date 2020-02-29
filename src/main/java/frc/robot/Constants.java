@@ -44,9 +44,7 @@ public final class Constants {
 
     // DriveStick Controls
     public static final double DRIVESTICK_DEADBAND = 0.05;
-
     public static final int SHIFT_BUTTON = 1;
-
     public static final int VISION_AIM_BUTTON = 4;
 
     // SecondaryStick Controls
