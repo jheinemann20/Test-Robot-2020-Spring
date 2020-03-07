@@ -127,7 +127,6 @@ public class RobotContainer {
     aimButton.whileHeld(aimCom);
     liftTopButton.whileActiveContinuous(liftTopCom);
     liftBottomButton.whileActiveContinuous(liftBottomCom);
-    // shootButton.whileHeld(shootCom);
     liftUpButton.whileActiveContinuous(liftUpCom);
     liftDownButton.whileActiveContinuous(liftDownCom);
     resetEncoderButton.whileHeld(liftResetCom);
