@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
 import frc.robot.commands.DriveTrainCommands.LimelightAimCom;
 import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
+import frc.robot.commands.DriveTrainCommands.ToDistanceCom;
 import frc.robot.commands.HerderCommands.HerdCom;
 import frc.robot.commands.HerderCommands.LowerArmCom;
 import frc.robot.commands.HerderCommands.RaiseArmCom;
@@ -30,10 +31,12 @@ import frc.robot.commands.LifterCommands.LiftStop;
 import frc.robot.commands.LifterCommands.LiftTopCom;
 import frc.robot.commands.LifterCommands.LiftUpCom;
 import frc.robot.commands.ShooterCommands.ShootCom;
+import frc.robot.commands.ShooterCommands.ShooterLoadCom;
 import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.HerderArmSub;
 import frc.robot.subsystems.HerderSub;
 import frc.robot.subsystems.LifterSub;
+import frc.robot.subsystems.LoaderSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.triggers.AxisButton;
 import frc.robot.triggers.POVButton;
@@ -54,15 +57,18 @@ public class RobotContainer {
   private final ShooterSub shooterSub = new ShooterSub();
   private final HerderSub herderSub = new HerderSub();
   private final HerderArmSub herderArmSub = new HerderArmSub();
+  private final LoaderSub loaderSub = new LoaderSub();
 
   @JsonIgnore
   private final ArcadeDriveCom arcadeDrive = new ArcadeDriveCom(driveSub);
   @JsonIgnore
   private final MecanumDriveCom mecanumDrive = new MecanumDriveCom(driveSub);
-  
+
+  private final ToDistanceCom distanceCom = new ToDistanceCom(driveSub);
   private final LimelightAimCom aimCom = new LimelightAimCom(driveSub);
   
   private final ShootCom shootCom = new ShootCom(shooterSub);
+  private final ShooterLoadCom loadCom = new ShooterLoadCom(loaderSub);
 
   private final LiftUpCom liftUpCom = new LiftUpCom(lifterSub);
   private final LiftDownCom liftDownCom = new LiftDownCom(lifterSub);
@@ -84,8 +90,10 @@ public class RobotContainer {
   // Buttons
   private JoystickButton shiftButton = new JoystickButton(myJoy, Constants.SHIFT_BUTTON);
   private JoystickButton aimButton = new JoystickButton(myJoy, Constants.VISION_AIM_BUTTON);
+  private JoystickButton distanceButton = new JoystickButton(myJoy, Constants.TO_DISTANCE_BUTTON);
 
   private JoystickButton shootButton = new JoystickButton(myJoy2, Constants.SHOOTER_SHOOT_BUTTON);
+  private JoystickButton loadButton = new JoystickButton(myJoy2, Constants.SHOOTER_LOAD_BUTTON);
   private AxisButton liftUpButton  = new AxisButton(myJoy2, Constants.LIFT_UP_AXIS, 0.01);
   private AxisButton liftDownButton = new AxisButton(myJoy2, Constants.LIFT_DOWN_AXIS, 0.01);
   private JoystickButton herdButton = new JoystickButton(myJoy2, Constants.HERD_BUTTON);
@@ -99,7 +107,17 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    driveSub.setDefaultCommand(mecanumDrive);
+    configureButtonBindings();
+  }
+
+  /**
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {
+    driveSub.setDefaultCommand(arcadeDrive);
     lifterSub.setDefaultCommand(liftStopCom);
     herderSub.setDefaultCommand(stopHerdCom);
     herderArmSub.setDefaultCommand(stopArmCom);
@@ -113,18 +131,10 @@ public class RobotContainer {
     liftUpButton.whileActiveContinuous(liftUpCom);
     liftDownButton.whileActiveContinuous(liftDownCom);
     resetEncoderButton.whileHeld(liftResetCom);
-    shootButton.whileHeld(shootCom);
-    configureButtonBindings();
-  }
-
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    shiftButton.toggleWhenPressed(arcadeDrive);
+    shootButton.toggleWhenPressed(shootCom);
+    distanceButton.whileHeld(distanceCom);
+    loadButton.whileHeld(loadCom);
+    shiftButton.toggleWhenPressed(mecanumDrive);
   }
 
   /**

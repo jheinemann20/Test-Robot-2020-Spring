@@ -43,21 +43,21 @@ public class LifterSub extends SubsystemBase {
     frontPID.setIntegratorRange(-0.5, 0.5);
     rearPID.setIntegratorRange(-0.5, 0.5);
 
-    maxLift = 10000;
+    maxLift = 9500;
   }
 
   public void lift(double speed) {
     if (frontEncoder.getDistance() < maxLift) {
-      System.out.println(speed);
       frontLifter.set(speed);
       rearLifter.set(-speed + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
     } else if (speed > 0) {
       frontLifter.set(speed);
       rearLifter.set(-speed + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
     } else {
+      frontLifter.set(0);
       rearLifter.set(rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
     }
-    System.out.println(frontEncoder.getDistance() + "   " + rearEncoder.getDistance() + "     " + rearPID.calculate(rearEncoder.getDistance(), frontEncoder.getDistance()));
+    System.out.println(frontEncoder.getDistance() + "    " + rearEncoder.getDistance());
   }
 
   public void stopLift() {

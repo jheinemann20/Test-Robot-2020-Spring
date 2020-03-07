@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -34,6 +35,10 @@ public class DriveTrainSub extends SubsystemBase {
   private DoubleSolenoid driveSol;
 
   private double deadband;
+
+  private double targetHeight = 208.5;
+  private double cameraHeight = 27;
+  private double targetAngle = 0;
 
   public DriveTrainSub() {
     frontLeft = new CANSparkMax(Constants.FRONT_LEFT_MOTOR, MotorType.kBrushless);
@@ -69,14 +74,26 @@ public class DriveTrainSub extends SubsystemBase {
   }
 
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
-    driveSol.set(DoubleSolenoid.Value.kReverse);
+    driveSol.set(DoubleSolenoid.Value.kForward);
     mecDrive.driveCartesian(-ySpeed * 0.5, xSpeed * 0.5, zRotation * 0.5);
 
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
-    driveSol.set(DoubleSolenoid.Value.kForward);
+    driveSol.set(DoubleSolenoid.Value.kReverse);
     arcDrive.arcadeDrive(xSpeed * 0.5, zRotation * 0.5);
+  }
+
+  /**
+   * Gets the distnace between the robot and the target (provided the target is in the field of view of the limelight)
+   * @return distance
+   */
+  public double getDistance() {
+    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    if (tv == 0)
+      return 0;
+    targetAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    return (targetHeight - cameraHeight) / Math.tan(targetAngle);
   }
 
   public double getCurrent(String name) {

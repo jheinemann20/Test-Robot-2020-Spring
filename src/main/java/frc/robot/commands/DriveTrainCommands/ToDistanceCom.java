@@ -8,22 +8,28 @@
 package frc.robot.commands.DriveTrainCommands;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSub;
 
-public class LimelightAimCom extends CommandBase {
+public class ToDistanceCom extends CommandBase {
 
   private DriveTrainSub driveSub;
 
-  private double tv;
-  private double tx;
+  private PIDController drivePID;
+
+  private double distance;
+  private double setDistance = 90;
 
   /**
-   * Creates a new LimelightAimCom.
+   * Creates a new ToDistanceCom.
    */
-  public LimelightAimCom(DriveTrainSub driveSub) {
-    addRequirements(driveSub);
+  public ToDistanceCom(DriveTrainSub driveSub) {
     this.driveSub = driveSub;
+    addRequirements(driveSub);
+
+    drivePID = new PIDController(0.04, 0, 0.01);
+    drivePID.setIntegratorRange(-0.1, 0.1);
   }
 
   // Called when the command is initially scheduled.
@@ -34,14 +40,13 @@ public class LimelightAimCom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    if (tv == 0)
-      return;
-    tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) + 5;
+    distance = driveSub.getDistance();
+    System.out.println(distance);
+    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) + 5;
     if (tx > 0 ) {
-      driveSub.arcadeDrive(0, 0.4 + tx / 20);
+      driveSub.arcadeDrive(-drivePID.calculate(distance, setDistance), 0.4 + tx / 20);
     } else if (tx < 0) {
-      driveSub.arcadeDrive(0, -0.4 + tx / 20);
+      driveSub.arcadeDrive(-drivePID.calculate(distance, setDistance), -0.4 + tx / 20);
     }
   }
 
