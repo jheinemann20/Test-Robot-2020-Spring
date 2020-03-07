@@ -15,6 +15,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -39,8 +41,8 @@ public class ShooterSub extends SubsystemBase {
     // shooterEncoder = new CANEncoder(shooterMotor);
     // shooterPID = shooterMotor.getPIDController();
 
-    // kP = 5e-5; 
-    // kI = 1e-6;
+    // kP = 0.00005; 
+    // kI = 0.000001;
     // kD = 0; 
     // kIz = 0; 
     // kFF = 0;
@@ -57,7 +59,6 @@ public class ShooterSub extends SubsystemBase {
   }
 
   public void startShoot() {
-    System.out.println("Setting");
     shooterMotor.set(-1);
     // shooterPID.setReference(rpm, ControlType.kVelocity);
   }
